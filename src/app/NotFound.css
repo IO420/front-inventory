@@ -1,0 +1,43 @@
+.notfound {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  padding: 2rem;
+}
+
+.notfound h1 {
+  font-size: 6rem;
+  color: #ff4d4d;
+  margin-bottom: 0.5rem;
+}
+
+.notfound h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.notfound p {
+  color: #050505;
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+.notfound button {
+  background: #ff4d4d;
+  border: none;
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.notfound button:hover {
+  background: #e60000;
+}
