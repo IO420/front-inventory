@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  padding: 5px;
+}
+
+.button,
+.pageButton {
+  min-width: 30px;
+  height: 30px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  background: white;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.dots {
+  padding: 0 4px;
+  font-weight: bold;
+  color: #6b7280;
+}

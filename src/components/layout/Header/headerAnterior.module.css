@@ -1,0 +1,13 @@
+.header {
+    background: linear-gradient(to left, #003e79, #024589);
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15%;
+    padding-right: 15%;
+}

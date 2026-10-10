@@ -1,0 +1,267 @@
+.barNavigation {
+  display: flex;
+  text-align: center;
+  background-color: #ffffff;
+  width: 100%;
+  top: 0;
+  height: 45px;
+  max-height: 40px;
+}
+
+.barNavigation ul {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  gap: 10px;
+  transition: width 0.5 ease-in-out;
+}
+
+.barNavigation li {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  color: #585858;
+  width: fit-content;
+  transition:
+    background-color 0.3s ease,
+    border 0.3s ease;
+  font-size: 1.4rem;
+}
+
+.barNavigation li:hover {
+  background-color: #f3f4f6;
+  color: black !important;
+  border-radius: 8px;
+  z-index: 2;
+}
+
+.menuToggle {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.menuToggle div {
+  width: 25px;
+  height: 3px;
+  background-color: #000000;
+  border-radius: 4px;
+}
+
+.subMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  border-radius: 4px 4px 0 0;
+}
+
+.subMenu ul {
+  opacity: 0;
+  max-height: 0;
+  position: absolute;
+  flex-direction: column;
+  top: 100%;
+  width: 100%;
+  min-width: 200px;
+  border: 1px solid #cfcfcf;
+  border-radius: 8px;
+  background-color: #ffffff;
+  transition: color 0.3s ease;
+  transition:
+    opacity 0.4s ease,
+    max-height 0.4s ease;
+}
+
+.subMenu ul a {
+  display: none;
+}
+
+.subMenu.open ul {
+  display: flex;
+  color: rgba(0, 61, 121, 1);
+}
+
+.subMenu ul:hover {
+  color: #101113;
+}
+
+.subMenu:hover ul a {
+  display: flex;
+}
+
+.subMenu li {
+  padding: 10px 0;
+}
+
+.subMenu span {
+  font-weight: bold;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: #545454;
+  font-size: 1.4rem;
+  padding: 1rem;
+  display: flex;
+  gap: 10px;
+}
+
+.subMenu:hover>span,
+.subMenu>a:hover>span {
+  color: black;
+}
+
+.subMenu.active span {
+  color: black;
+  font-weight: bold;
+}
+
+.subMenu.active {
+  border-radius: 8px;
+  background-color: #f3f4f6;
+}
+
+.containerLinks {
+  padding: 0 !important;
+  border-radius: 0 0 4px 4px;
+  top: 20px;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 100%;
+  height: 100%;
+  font-size: 1.4rem;
+  min-width: 100px;
+}
+
+thead,
+tbody {
+  font-size: 1.25rem;
+}
+
+@media(max-height:550px) {
+  .barNavigation {
+    max-height: 35px;
+  }
+}
+
+@media (min-width: 1001px) {
+  .subMenu:hover ul {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .menuToggle {
+    display: flex;
+    position: relative;
+    align-items: end;
+    transition: transform 0.3s ease;
+  }
+
+  .menuToggle.center {
+    align-items: center;
+    margin: 0;
+  }
+
+  .barNavigation {
+    font-size: 1.4rem;
+    justify-content: end;
+  }
+
+  .barNavigation ul {
+    position: absolute;
+    top: 76px;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    background-color: #fff;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+
+    transform: translateY(-15px);
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+      transform 0.35s ease-in-out,
+      opacity 0.35s ease-in-out,
+      visibility 0.35s ease-in-out;
+  }
+
+  .barNavigation ul.active {
+    position: absolute;
+    left: 0;
+    display: flex;
+    width: 100%;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .containerLinks {
+    top: 20px;
+  }
+
+  .barNavigation {
+    padding: 0;
+  }
+
+  .barNavigation li {
+    color: white;
+  }
+
+  .barNavigation li:hover {
+    color: white;
+    border-radius: 0;
+    border: none;
+  }
+
+  .subMenu ul {
+    position: relative;
+    top: 0px;
+    width: 100%;
+    background-color: rgb(1, 92, 184);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+
+    transform: translateY(-5px);
+
+    transition:
+      max-height 0.35s ease,
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .subMenu.open ul {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .subMenu.open ul a {
+    display: flex;
+    pointer-events: auto;
+  }
+
+  thead,
+  tbody {
+    font-size: 1rem;
+  }
+}

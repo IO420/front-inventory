@@ -35,18 +35,18 @@ html {
 body {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 100dvh;
   width: 100vw;
+  overflow: hidden;
   background-color: #f9f9f9;
 }
 
 main {
   position: relative;
   display: flex;
-  flex-direction: column;
-  max-width: 100vw;
+  overflow: hidden;
+  padding: 7.5rem 5vw 0rem 5vw;
+  width: 100%;
 }
 
 main::before {
@@ -75,4 +75,13 @@ main::before {
   html {
     color-scheme: dark;
   }
+}
+
+input {
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid #cfcfcf;
+  padding: 8px 12px;
+  background-color: white;
+  z-index: 1;
 }

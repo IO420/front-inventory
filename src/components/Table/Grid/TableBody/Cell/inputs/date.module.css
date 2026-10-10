@@ -1,0 +1,21 @@
+.inputDate {
+  width: 100%;
+  height: 30px;
+
+  border: none;
+  outline: none;
+
+  padding: 0 6px;
+
+  font-size: 12px;
+
+  background: transparent;
+  min-width: 10px;
+  border-radius: 0;
+}
+
+.inputDate:focus {
+  border-radius: 10px;
+  box-shadow: none;
+  white-space: nowrap;
+}

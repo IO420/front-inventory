@@ -1,0 +1,210 @@
+.containerForm {
+  width: 100%;
+  max-width: 450px;
+  gap: 1rem;
+}
+
+.label {
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: block;
+}
+
+.groupInput {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.button {
+  font-size: 1.4rem;
+  padding: 1rem 1.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 3.5rem;
+  max-width: 240px;
+  font-weight: bold;
+  border: none;
+  transition: background-color 0.2s ease;
+  color: #fff;
+}
+
+.button:disabled {
+  background-color: #bfc6d1;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.buttonSearch {
+  background-color: #6588da;
+}
+
+.buttonSearch:hover {
+  background-color: #1d4ed8;
+}
+
+.customSelect {
+  position: relative;
+  width: 100%;
+  max-width: 230px;
+  font-size: 1.4rem;
+
+  border-radius: 0px;
+  transition: border-radius 0.2s ease, box-shadow 0.2s ease;
+}
+
+.customSelect.open {
+  border-radius: 10px;
+  outline: 1px solid #e4e5e2;
+}
+
+.customSelect.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.selectHeader {
+  padding: 0px 6px;
+  height: 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  border-radius: 6px;
+
+}
+
+.selectHeader span {
+  font-size: 12px;
+
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  max-width: 100%;
+}
+
+.placeholder {
+  color: #999;
+}
+
+.inputSelect {
+  border: none;
+  background: transparent;
+  padding: 0 5px;
+  margin: 0;
+  width: 100%;
+  outline: none;
+  font-size: 12px;
+  min-width: 10px;
+}
+
+.inputSelect:focus {
+  background-color: transparent;
+  box-shadow: none;
+
+}
+
+.options {
+  position: absolute;
+  bottom: 105%;
+  left: 0;
+  right: 0;
+
+  width: max-content;
+  min-width: 100%;
+  max-width: 400px;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  z-index: 10;
+
+  max-height: 250px;
+  overflow-y: auto;
+
+  white-space: nowrap;
+}
+
+.option {
+  padding: 10px 7px;
+  font-size: 12px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #fff;
+}
+
+.option:hover {
+  background-color: #f0f0f0;
+}
+
+.option.disabled {
+  cursor: not-allowed;
+  color: #999;
+}
+
+.activeOption {
+  background-color: #e6f0ff;
+}
+
+.arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+
+  border-top: 7px solid #999;
+  transition: transform 0.2s ease;
+}
+
+.up {
+  transform: rotate(180deg);
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.column {
+  flex-direction: column;
+  align-items: start;
+}
+
+.refresh {
+  position: absolute;
+  right: -45px;
+  bottom: 0;
+
+  background-color: #a9da65;
+  outline: 2px solid #69a910;
+
+  border-radius: 8px;
+  height: 35px;
+  width: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.inputContainer label {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #6588da;
+}

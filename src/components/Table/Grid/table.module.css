@@ -1,0 +1,333 @@
+.container {
+  width: fit-content;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  position: relative;
+  background-color: white;
+  height: fit-content;
+}
+
+/* HEADER */
+.header {
+  display: grid;
+  background: #e0e4e7;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 10px 10px 0 0;
+}
+
+.filter {
+  display: grid;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.headerCell {
+  padding: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: end;
+  color: #2f4450;
+}
+
+.filterCell {
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: end;
+  color: white;
+  padding: 0 1px;
+}
+
+.authorized {
+  content: "";
+  position: absolute;
+  border-radius: 10px 10px 0 0;
+  top: -25px;
+  width: fit-content;
+  height: 25px;
+  background-color: #a9da65;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.authorizedNo {
+  padding: 5px;
+  content: "";
+  position: absolute;
+  border-radius: 10px 10px 0 0;
+  top: -25px;
+  width: fit-content;
+  height: 25px;
+  background-color: #e4e5e2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* BODY */
+.body {
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 0 10px 10px;
+}
+
+.row {
+  display: grid;
+  cursor: pointer;
+  transition: background 0s;
+}
+
+.row:hover {
+  background: #f3f4f6;
+}
+
+.cell {
+  display: flex;
+  font-size: 14px;
+  color: #111827;
+  border-bottom: 1px solid #f3f4f6;
+  border-right: 1px solid #f0f0f0;
+  align-items: center;
+  background-color: white;
+  min-height: 25px;
+  height: 3rem;
+}
+
+.cell:last-child {
+  border-right: none;
+}
+
+.empty {
+  padding: 10px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.input {
+  overflow: hidden;
+  border: none;
+  min-width: 10px;
+  width: 100%;
+  max-width: none;
+  border-radius: 0;
+  padding: 2px;
+  height: stretch;
+  align-content: center;
+}
+
+.input option {
+  background-color: white;
+  color: black;
+}
+
+.filterInput {
+  border: 1px solid #cfcfcf;
+  min-width: 10px;
+  padding: 4px 5px;
+  height: 30px;
+}
+
+.input:focus {
+  box-shadow: none;
+  background-color: #eee9e94f;
+  z-index: 1;
+  outline: 1px solid #e4e5e2;
+  border-radius: 10px;
+}
+
+.notEditable {
+  position: relative;
+  cursor: auto;
+  background-color: #eaeaea32;
+  min-width: 10px;
+}
+
+.notEditable div {
+  width: 100%;
+  text-align: center;
+  font-size: clamp(11px, 1vw, 13px);
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.percentContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.percent {
+  padding-right: 2px;
+  right: 0px;
+  pointer-events: none;
+  margin: 1px;
+}
+
+.percentContainer .input {
+  padding-right: 7px;
+  max-width: 5ch;
+}
+
+.saveButton {
+  border: none;
+  border-radius: 6px;
+  background: #37aa3f;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  height: 31px;
+  width: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerButton {
+  display: flex;
+  position: absolute;
+  top: -35px;
+  gap: 5px;
+}
+
+.addButton {
+  left: 0;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #60a5fa;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.editButton {
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  height: 31px;
+  width: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editButton:hover {
+  background: #1d4ed8;
+}
+
+.cancelEditButton {
+  border: none;
+  padding: 7px 14px;
+  border-radius: 6px;
+  background: #dc2626;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.cancelEditButton:hover {
+  background: #b91c1c;
+}
+
+.hideButton {
+  color: #fff;
+  cursor: pointer;
+  background: #d4a017;
+  border: none;
+  border-radius: 6px;
+  padding: 5px;
+  font-weight: 600;
+  transition: all 0.2s;
+  position: absolute;
+  top: 0px;
+  left: -35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.render {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.suma {
+  float: right;
+  font-size: 15px;
+  font-weight: bold;
+  color: #0056b3;
+  background-color: #e7f1ff;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #b6d4fe;
+  font-family: sans-serif;
+}
+
+.icon {
+  filter: invert(1);
+}
+
+@media (max-width: 700px) {
+  .container {
+    background-color: transparent;
+    border: none;
+  }
+
+  .header {
+    display: none;
+  }
+
+  .body{
+    gap: 10px;
+  }
+
+  .row {
+    display: block;
+    border-bottom: none;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .cell {
+    padding: 2px;
+
+    display: flex;
+    justify-content: space-between;
+    border-bottom: none;
+  }
+
+  .cell:last-child {
+    border-bottom: none;
+  }
+
+  .cell::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #6b7280;
+    margin-right: 10px;
+  }
+
+  .notEditable div{
+    text-align: start !important;
+  }
+}

@@ -1,0 +1,124 @@
+.containerLink {
+  display: flex;
+  margin: 5px 0;
+}
+
+.logo {
+  position: relative;
+  z-index: 3;
+  object-fit: contain;
+}
+
+.logoContainerUnam {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  aspect-ratio: 1/1;
+}
+
+.logoContainer {
+  position: relative;
+  width: 100%;
+  height: 56px;
+  aspect-ratio: 250/70;
+}
+
+.cedetecContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  z-index: -1;
+}
+
+.cedetecContainer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #f9f9f9, rgba(128, 128, 128, 0));
+}
+
+.header {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  min-height: 65px;
+  background-color: #fff;
+  padding: 0 10px;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.containerBarNav {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  max-height: 60%;
+}
+
+@media (max-height: 550px) {
+  .containerBarNav {
+    max-height: 70%;
+  }
+
+  .yellowPart {
+    height: 15px;
+  }
+
+  .logoContainer {
+    min-width: 150px;
+    aspect-ratio: 250/70;
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    margin: 5px 2px;
+  }
+
+  .header::after {
+    left: -60px;
+    min-width: 300px;
+  }
+
+  .header::before {
+    left: -40px;
+    width: 10%;
+    min-width: 300px;
+  }
+}
+
+@media (max-width: 800px) {
+  .yellowPart {
+    left: 0;
+    background: #015cb8;
+    transform: skew(0deg);
+  }
+
+  .header::after {
+    left: -100px;
+  }
+
+  .header::before {
+    left: -80px;
+  }
+}
+
+@media (max-width: 400px) {
+  .header::after {
+    min-width: 100%;
+    transform: skew(25deg);
+  }
+
+  .header::before {
+    min-width: 100%;
+    transform: skew(25deg);
+  }
+
+  .containerBarNav {
+    padding-left: 0;
+  }
+}
