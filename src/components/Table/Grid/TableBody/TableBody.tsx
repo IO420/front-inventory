@@ -71,7 +71,11 @@ export default function TableBody<T extends EditableRow>({
               {columns.map((col, colIndex) => {
                 if (col.render) {
                   return (
-                    <div key={colIndex} className={styles.render}>
+                    <div
+                      key={colIndex}
+                      className={styles.render}
+                      data-label={col.label}
+                    >
                       {col.render(row[col.key as keyof T], row, rowIndex)}
                     </div>
                   );

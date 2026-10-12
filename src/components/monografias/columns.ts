@@ -8,7 +8,7 @@ export interface InfoData1 {
 }
 
 export const tableM: Column<InfoData1>[] = [
-  { key: "name", label: "Nombre del producto", align: "center", editable: false },
+  { key: "name", label: "Producto", align: "center", editable: false },
   {
     key: "location",
     label: "Ubicacion",

@@ -25,6 +25,7 @@ export default async function Header() {
   return (
     <header className={header.header}>
       <div className={header.containerLink}>
+        <Link href={"/"}>
           <div className={header.logoContainerUnam}>
             <Image
               className={header.logo}
@@ -34,6 +35,7 @@ export default async function Header() {
               style={{ objectFit: "contain" }}
             />
           </div>
+        </Link>
       </div>
 
       <div className={header.containerBarNav}>

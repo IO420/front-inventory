@@ -32,6 +32,7 @@ export default function CellNotEditable<T extends EditableRow>({
         textAlign: col.align || "center",
         justifyContent: col.align || "center",
       }}
+      data-label={col.label}
     >
       <div
         title={String(row[col.key] ?? "")}
@@ -40,8 +41,7 @@ export default function CellNotEditable<T extends EditableRow>({
             rowIndex,
             key: col.key,
             value: row[col.key] ?? "",
-            handleChange: () => {
-            },
+            handleChange: () => {},
             type: col.type,
             options: col.options,
           });

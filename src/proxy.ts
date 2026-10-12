@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { envConfig } from "./app/actions/config";
+import { envConfig } from "./actions/config";
 
 export function proxy(request: NextRequest) {
   const token = request.cookies.get("authToken")?.value;

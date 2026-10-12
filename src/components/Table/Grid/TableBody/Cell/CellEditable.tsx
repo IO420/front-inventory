@@ -35,7 +35,11 @@ export default function CellEditable<T extends EditableRow>({
   columnTextColor,
 }: Props<T>) {
   return (
-    <div className={styles.cell} style={{ position: "relative" }}>
+    <div
+      className={styles.cell}
+      style={{ position: "relative" }}
+      data-label={col.label}
+    >
       {col.type === "select" ? (
         <SelectTable
           col={col}
