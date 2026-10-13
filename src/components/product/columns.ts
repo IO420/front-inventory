@@ -28,6 +28,6 @@ export const tableProduct: Column<Product>[] = [
     label: "Marca",
     align: "center",
     editable: false,
-    width:"300px",
+    width:"20%",
   },
 ];

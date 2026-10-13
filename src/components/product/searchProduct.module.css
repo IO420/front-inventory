@@ -6,16 +6,16 @@
 .form {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
   width: 100%;
   gap: 10px;
-  margin-bottom: 10px;
+  margin: 20px 0 40px;
 }
 
 .containerInput {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  width: 100%;
 }
 
 .input:focus {

@@ -54,7 +54,7 @@ export default function SearchProduct({
           Buscar
         </button>
       </form>
-      
+
       <section className={styles.containerTable}>
         <DataGrid
           columns={tableProduct}
@@ -65,6 +65,7 @@ export default function SearchProduct({
           pagination={true}
           rowsPerPage={15}
           width="100%"
+          activeAddButton={true}
         />
       </section>
     </>

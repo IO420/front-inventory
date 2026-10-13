@@ -194,9 +194,9 @@ export default function DataGrid<T extends EditableRow>({
 
   const paginatedData = pagination
     ? visibleData.slice(
-      (currentPage - 1) * rowsPerPage,
-      currentPage * rowsPerPage,
-    )
+        (currentPage - 1) * rowsPerPage,
+        currentPage * rowsPerPage,
+      )
     : visibleData;
 
   useEffect(() => {
@@ -223,13 +223,26 @@ export default function DataGrid<T extends EditableRow>({
             onClick={onAddRow}
             disabled={changes.length > 0}
           >
+            <Image
+              src={"/add.png"}
+              width={20}
+              height={20}
+              alt="add"
+              className={styles.icon}
+            ></Image>
             {textAddButton}
           </button>
         )}
 
         {hasRecords && activeEditButton && !editMode && (
           <button className={styles.editButton} onClick={editAll}>
-            <Image src={"/edit.png"} height={19} width={20} alt="editar" className={styles.icon} />
+            <Image
+              src={"/edit.png"}
+              height={19}
+              width={20}
+              alt="editar"
+              className={styles.icon}
+            />
           </button>
         )}
 
@@ -244,7 +257,13 @@ export default function DataGrid<T extends EditableRow>({
               setEditMode(false);
             }}
           >
-            <Image src={"/save.png"} height={20} width={20} alt="editar" className={styles.icon} />
+            <Image
+              src={"/save.png"}
+              height={20}
+              width={20}
+              alt="editar"
+              className={styles.icon}
+            />
           </button>
         )}
         {total !== undefined && (
