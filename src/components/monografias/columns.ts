@@ -1,13 +1,13 @@
 import { Column } from "../Table/Grid/interfaceTable";
 
-export interface InfoData1 {
+export interface Product {
   name: string;
   location: string;
   quantity: number;
   brand: string;
 }
 
-export const tableM: Column<InfoData1>[] = [
+export const tableProduct: Column<Product>[] = [
   { key: "name", label: "Producto", align: "center", editable: false },
   {
     key: "location",

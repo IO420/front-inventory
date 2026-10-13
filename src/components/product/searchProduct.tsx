@@ -1,20 +1,40 @@
 "use client";
-import { useState } from "react";
-import { tableM } from "@/components/monografias/columns";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Product, tableProduct } from "@/components/monografias/columns";
 import DataGrid from "@/components/Table/Grid/Table";
 import styles from "./searchProduct.module.css";
 
-export default function SearchProduct() {
+interface SearchProductProps {
+  initialProducts: Product[];
+  searchQuery: string;
+}
+
+export default function SearchProduct({
+  initialProducts,
+  searchQuery,
+}: SearchProductProps) {
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState(searchQuery);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+  useEffect(() => {
+    setSearchTerm(searchQuery);
+  }, [searchQuery]);
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
+
+    const trimmed = searchTerm.trim();
+    if (!trimmed) return;
+
+    router.push(`?product=${encodeURIComponent(trimmed)}`);
   }
 
   return (
-    <section className={styles.togleContainer}>
-      <h1 className={styles.text}>Encuentra tus Productos</h1>
+    <>
       <form className={styles.form} onSubmit={handleSubmit}>
         {error && <p style={{ color: "red", fontSize: "1.2rem" }}>{error}</p>}
 
@@ -23,6 +43,9 @@ export default function SearchProduct() {
             className={styles.input}
             name="ProductName"
             type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Buscar producto..."
             required
           />
         </div>
@@ -31,24 +54,11 @@ export default function SearchProduct() {
           Buscar
         </button>
       </form>
-
+      
       <section className={styles.containerTable}>
         <DataGrid
-          columns={tableM}
-          data={[
-            {
-              name: "Monofett",
-              location: "nodeServerAppPaths",
-              quantity: 2,
-              brand: "Linefont",
-            },
-            {
-              name: "oeu",
-              location: "oeu",
-              quantity: 20,
-              brand: "oeu",
-            },
-          ]}
+          columns={tableProduct}
+          data={initialProducts}
           setActiveInput={() => {}}
           idField="partida"
           fontSize="12px"
@@ -57,7 +67,7 @@ export default function SearchProduct() {
           width="100%"
         />
       </section>
-    </section>
+    </>
   );
 }
 //IO

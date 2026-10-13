@@ -25,14 +25,28 @@ export default function CellNotEditable<T extends EditableRow>({
   columnTextColor,
   setActiveInput,
 }: Props<T>) {
+  const value = row[col.key];
+
+  //avoid void label in mode cell phone
+  const isEmpty =
+    value === null || value === undefined || String(value).trim() === "";
+
+  const fieldType = String(col.label || col.key)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
   return (
     <div
-      className={`${styles.cell} ${styles.notEditable}`}
+      className={`${styles.cell} ${styles.notEditable} ${
+        styles["type-" + fieldType] || ""
+      } ${isEmpty ? styles.emptyCell : ""}`}
       style={{
         textAlign: col.align || "center",
         justifyContent: col.align || "center",
       }}
       data-label={col.label}
+      data-field={fieldType}
     >
       <div
         title={String(row[col.key] ?? "")}

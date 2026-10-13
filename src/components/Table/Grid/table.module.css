@@ -294,19 +294,22 @@
     display: none;
   }
 
-  .body{
+  .body {
     gap: 10px;
   }
 
   .row {
-    display: block;
-    border-bottom: none;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
     background: white;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
     padding: 10px;
+    gap: 8px;
+
+    border-bottom: none;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
   .cell {
@@ -318,27 +321,102 @@
     border-right: none;
   }
 
-  .cell:last-child {
-    border-bottom: none;
+  .cell:first-child {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
   }
 
-  .cell::before {
-    content: attr(data-label);
-    font-weight: 600;
-    color: rgb(47, 68, 80);
-    margin-right: 10px;
-    white-space: nowrap;
+  .cell:first-child::before {
+    display: none;
   }
 
-  .notEditable{
+  .cell:not(:first-child) {
+    display: inline-flex;
+    width: fit-content;
+    background-color: #f1f5f9;
+    padding: 5px 12px !important;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #475569;
+  }
+
+  .cell:not(:first-child)::before {
+    content: attr(data-label) ": ";
+    font-weight: 700;
+    color: #1e4d6b;
+    margin-right: 4px;
+  }
+
+  .emptyCell {
+    display: none !important;
+  }
+
+  .notEditable {
     background-color: white;
   }
 
-  .notEditable div{
+  .notEditable div {
     text-align: start !important;
   }
 
-  .input{
+  .input {
     padding: 0;
+  }
+
+  /*Styles labels*/
+  .cell[data-field="ubicacion"] {
+    background-color: #e0f2fe !important;
+    color: #0369a1 !important;
+  }
+
+  .cell[data-field="ubicacion"]::before {
+    content: "" !important;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    background-color: #0369a1;
+    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>')
+      no-repeat center / contain;
+    -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>')
+      no-repeat center / contain;
+  }
+
+  .cell[data-field="cantidad"] {
+    background-color: #dcfce7 !important;
+    color: #15803d !important;
+  }
+
+  .cell[data-field="cantidad"]::before {
+    content: "" !important;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    background-color: #15803d;
+    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h11v2H4v-2zm14 0v-2h2v2h2v2h-2v2h-2v-2h-2v-2h2z"/></svg>')
+      no-repeat center / contain;
+    -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h11v2H4v-2zm14 0v-2h2v2h2v2h-2v2h-2v-2h-2v-2h2z"/></svg>')
+      no-repeat center / contain;
+  }
+
+  .cell[data-field="marca"] {
+    background-color: #ffedd5 !important;
+    color: #c2410c !important;
+  }
+
+  .cell[data-field="marca"]::before {
+    content: "" !important;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    background-color: #c2410c;
+    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>')
+      no-repeat center / contain;
+    -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>')
+      no-repeat center / contain;
   }
 }

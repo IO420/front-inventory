@@ -1,15 +1,13 @@
-import SearchProduct from "@/components/search/searchProduct";
+import SectionProduct from "@/components/product/sectionProduct";
+import { Suspense } from "react";
 
 export default async function Home(props: {
-  searchParams?: Promise<{ product: string }>;
+  searchParams?: Promise<{ product?: string }>;
 }) {
-  const params = await props.searchParams;
-  const product = params?.product ?? null;
-
-  if(product){
-    
-  }
-
-  return <SearchProduct />;
+  return (
+    <Suspense fallback={<div>Cargando productos...</div>}>
+      <SectionProduct searchParams={props.searchParams} />
+    </Suspense>
+  );
 }
 //IO
