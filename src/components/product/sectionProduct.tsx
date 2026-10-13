@@ -18,8 +18,7 @@ async function fetchProducts(query: string): Promise<Product[]> {
     }
 
     const response = await axios.get(
-      //adding number 2 temporarily
-      `${envConfig.apiUrl}/inventory/search/2/${encodeURIComponent(query)}`,
+      `${envConfig.apiUrl}/inventory/search/${encodeURIComponent(query)}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
