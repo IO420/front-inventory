@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Product, tableProduct } from "@/components/monografias/columns";
+import { Product, tableProduct } from "@/components/product/columns";
 import DataGrid from "@/components/Table/Grid/Table";
 import styles from "./searchProduct.module.css";
 

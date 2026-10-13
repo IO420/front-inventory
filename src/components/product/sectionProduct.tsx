@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { Product } from "@/components/monografias/columns";
+import { Product } from "@/components/product/columns";
 import SearchProduct from "./searchProduct";
 import axios from "axios";
 import styles from "./searchProduct.module.css";
