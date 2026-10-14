@@ -34,6 +34,8 @@ export default function SearchProduct({
     router.push(`?product=${encodeURIComponent(trimmed)}`);
   }
 
+  const handleTransferClick = async (row: Product) => {};
+
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -67,7 +69,7 @@ export default function SearchProduct({
 
       <section className={styles.containerTable}>
         <DataGrid
-          columns={tableProduct}
+          columns={tableProduct(handleTransferClick)}
           data={initialProducts}
           setActiveInput={() => {}}
           idField="partida"
