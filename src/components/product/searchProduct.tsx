@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Product, tableProduct } from "@/components/product/columns";
 import DataGrid from "@/components/Table/Grid/Table";
 import styles from "./searchProduct.module.css";
+import Image from "next/image";
 
 interface SearchProductProps {
   initialProducts: Product[];
@@ -36,23 +37,32 @@ export default function SearchProduct({
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
-        {error && <p style={{ color: "red", fontSize: "1.2rem" }}>{error}</p>}
+        {error && <p className={styles.errorMessage}>{error}</p>}
 
-        <div className={styles.containerInput}>
-          <input
-            className={styles.input}
-            name="ProductName"
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Buscar producto..."
-            required
-          />
+        <div className={styles.searchBarWrapper}>
+          <div className={styles.inputContainer}>
+            <Image
+              src="/lupa.png"
+              width={20}
+              height={20}
+              alt="Buscar"
+              className={styles.searchIcon}
+            />
+            <input
+              className={styles.input}
+              name="ProductName"
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="ingresa tu búsqueda..."
+              required
+            />
+          </div>
+
+          <button type="submit" className={styles.searchButton}>
+            Buscar
+          </button>
         </div>
-
-        <button type="submit" className={styles.searchButton}>
-          Buscar
-        </button>
       </form>
 
       <section className={styles.containerTable}>
