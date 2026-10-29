@@ -1,29 +1,15 @@
-import { cookies } from "next/headers";
 import { Product } from "@/components/product/columns";
 import SearchProduct from "./searchProduct";
-import axios from "axios";
 import styles from "./searchProduct.module.css";
 import { envConfig } from "@/actions/config";
+import { apiServerRequest } from "@/actions/apiConfig/config";
 
 async function fetchProducts(query: string): Promise<Product[]> {
   if (!query) return [];
 
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("authToken")?.value;
-
-    if (!token) {
-      console.warn("No se encontró la cookie authToken");
-      return [];
-    }
-
-    const response = await axios.get(
+    const response = await apiServerRequest(
       `${envConfig.apiUrl}/inventory/search/${encodeURIComponent(query)}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
     );
 
     return response.data;

@@ -6,6 +6,8 @@ import { Product, tableProduct } from "@/components/product/columns";
 import DataGrid from "@/components/Table/Grid/Table";
 import styles from "./searchProduct.module.css";
 import Image from "next/image";
+import CreateProduct from "./createProduct";
+import InventoryEntryCard from "./card";
 
 interface SearchProductProps {
   initialProducts: Product[];
@@ -19,6 +21,7 @@ export default function SearchProduct({
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState(searchQuery);
   const [error, setError] = useState<string | null>(null);
+  const [showCreateProduct, setShowCreateProduct] = useState(false);
 
   useEffect(() => {
     setSearchTerm(searchQuery);
@@ -78,8 +81,16 @@ export default function SearchProduct({
           rowsPerPage={15}
           width="100%"
           activeAddButton={true}
+          onAddRow={() => setShowCreateProduct(true)}
         />
       </section>
+
+      {showCreateProduct && (
+        <InventoryEntryCard
+          onClose={() => setShowCreateProduct(false)}
+          onSubmit={()=>{}}
+        />
+      )}
     </>
   );
 }

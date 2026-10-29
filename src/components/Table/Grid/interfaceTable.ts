@@ -19,6 +19,8 @@ export interface Column<T> {
   max?: number;
 
   render?: (value: any, row: T, rowIndex: number) => React.ReactNode;
+
+  image?:boolean;
 }
 
 export interface DataGridProps<T> {

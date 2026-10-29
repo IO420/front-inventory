@@ -8,6 +8,7 @@ export interface Product {
   quantity: number;
   brand: string;
   sale: string;
+  image: string;
 }
 
 export const tableProduct = (
@@ -40,6 +41,7 @@ export const tableProduct = (
     label: "Venta",
     align: "center",
     editable: true,
+    width: "50px",
     render: (_, row) => {
       const disabled = !row.id_product;
 
@@ -52,14 +54,14 @@ export const tableProduct = (
             color: "white",
             border: "none",
             borderRadius: "6px",
-            width:"29px",
-            height:"29px",
+            width: "29px",
+            height: "29px",
             opacity: disabled ? 0.5 : 1,
             cursor: disabled ? "not-allowed" : "pointer",
           }}
         >
           <Image
-          style={{filter:"invert(1)"}}
+            style={{ filter: "invert(1)" }}
             src={"/shopcar.png"}
             width={20}
             height={20}
@@ -68,5 +70,13 @@ export const tableProduct = (
         </button>
       );
     },
+  },
+  {
+    key: "image",
+    label: "Imagen",
+    align: "center",
+    editable: false,
+    width: "100px",
+    image: true,
   },
 ];

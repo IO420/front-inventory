@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Column, EditableRow } from "../interfaceTable";
 import styles from "../table.module.css";
 import CellEditable from "./Cell/CellEditable";
@@ -77,6 +78,19 @@ export default function TableBody<T extends EditableRow>({
                       data-label={col.label}
                     >
                       {col.render(row[col.key as keyof T], row, rowIndex)}
+                    </div>
+                  );
+                }
+
+                if (col.image) {
+                  return (
+                    <div key={colIndex} className={`${styles.img}`}>
+                      <Image
+                        src={`${row[col.key] || "/book.png"}`}
+                        alt="image"
+                        fill
+                        objectFit="contain"
+                      ></Image>
                     </div>
                   );
                 }

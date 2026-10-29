@@ -1,0 +1,235 @@
+.container {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  color: #26364a;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.inputWrapper input {
+  width: 100%;
+  min-width: 0;
+  height: 46px;
+  padding: 0 42px;
+  border: 1px solid #d8e0eb;
+  border-radius: 10px;
+  outline: none;
+  background: #fff;
+  color: #243247;
+  font: inherit;
+  font-size: 0.9rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.inputWrapper input::placeholder {
+  color: #98a4b5;
+}
+
+.inputWrapper input:focus {
+  border-color: #1765c5;
+  box-shadow: 0 0 0 3px rgb(23 101 197 / 12%);
+}
+
+.inputWrapper input:disabled {
+  background: #f4f6f9;
+  cursor: not-allowed;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 13px;
+  z-index: 1;
+  width: 19px;
+  height: 19px;
+  color: #8290a3;
+  pointer-events: none;
+}
+
+.spinner {
+  position: absolute;
+  right: 14px;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #dce6f5;
+  border-top-color: #1765c5;
+  border-radius: 50%;
+  animation: searchSpin 0.7s linear infinite;
+}
+
+@keyframes searchSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  z-index: 50;
+  max-height: 280px;
+  overflow-y: auto;
+  border: 1px solid #e0e7f0;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgb(24 43 72 / 13%);
+}
+
+.message,
+.error {
+  margin: 0;
+  padding: 16px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.message {
+  color: #748196;
+}
+
+.error {
+  color: #c33d47;
+}
+
+.results {
+  margin: 0;
+  padding: 5px;
+  list-style: none;
+}
+
+.results li {
+  margin: 0;
+  padding: 0;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 11px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #25354a;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.option:hover,
+.optionActive {
+  background: #f0f6ff;
+}
+
+.optionMark {
+  display: flex;
+  flex: 0 0 36px;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: #eaf2ff;
+  color: #1765c5;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.optionContent {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.optionContent strong {
+  overflow: hidden;
+  color: #243247;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.optionContent small {
+  overflow: hidden;
+  color: #7d899b;
+  font-size: 0.77rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 58px;
+  padding: 10px 12px;
+  border: 1px solid #b8d1f5;
+  border-radius: 10px;
+  background: #f5f9ff;
+}
+
+.selectedContent {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.selectedContent strong {
+  overflow-wrap: anywhere;
+  color: #24456e;
+  font-size: 0.9rem;
+}
+
+.selectedContent span {
+  overflow-wrap: anywhere;
+  color: #72839a;
+  font-size: 0.78rem;
+}
+
+.clearButton {
+  display: flex;
+  flex: 0 0 30px;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #718096;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.clearButton:hover {
+  background: #e5edf8;
+  color: #bd3543;
+}
+
+.clearButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
