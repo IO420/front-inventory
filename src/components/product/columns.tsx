@@ -7,6 +7,7 @@ export interface Product {
   location: string;
   quantity: number;
   brand: string;
+  price: number;
   sale: string;
   image: string;
 }
@@ -35,6 +36,14 @@ export const tableProduct = (
     align: "center",
     editable: false,
     width: "20%",
+  },
+  {
+    key: "price",
+    label: "Precio",
+    align: "end",
+    editable: false,
+    width: "100px",
+    type: "money",
   },
   {
     key: "sale",

@@ -67,6 +67,9 @@ export default function InventoryEntryCard({
   onSubmit,
   onClose,
 }: InventoryEntryCardProps) {
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [maxUnlockedStep, setMaxUnlockedStep] = useState<number>(1);
+
   const [selectedProduct, setSelectedProduct] = useState<SearchOption | null>(
     null,
   );
@@ -174,60 +177,104 @@ export default function InventoryEntryCard({
     setError("");
   }
 
+  const validateStep = (step: number): boolean => {
+    if (step === 1) {
+      if (!selectedProduct) {
+        setError("Busca y selecciona el producto que deseas ingresar.");
+        return false;
+      }
+      const qty = Number(quantity);
+      if (!quantity.trim() || !Number.isSafeInteger(qty) || qty <= 0) {
+        setError("La cantidad debe ser un número entero mayor que cero.");
+        return false;
+      }
+    }
+
+    if (step === 2) {
+      const cost = Number(purchaseCost);
+      const price = Number(salePrice);
+
+      if (purchaseCost.trim() === "" || !Number.isFinite(cost) || cost < 0) {
+        setError("Ingresa un costo de compra válido.");
+        return false;
+      }
+
+      if (salePrice.trim() === "" || !Number.isFinite(price) || price < 0) {
+        setError("Ingresa un precio de venta válido.");
+        return false;
+      }
+    }
+
+    if (step === 3) {
+      if (!showNewSupplier && !selectedSupplier) {
+        setError("Selecciona un proveedor o registra uno nuevo.");
+        return false;
+      }
+
+      if (
+        showNewSupplier &&
+        (!supplier.name.trim() ||
+          !supplier.phone.trim() ||
+          !supplier.address.trim() ||
+          !supplier.email.trim())
+      ) {
+        setError("Completa todos los campos obligatorios del proveedor.");
+        return false;
+      }
+
+      if (
+        showNewSupplier &&
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(supplier.email.trim())
+      ) {
+        setError("Ingresa un correo electrónico válido para el proveedor.");
+        return false;
+      }
+    }
+
+    setError("");
+    return true;
+  };
+
+  const handleNextStep = () => {
+    if (validateStep(currentStep)) {
+      const nextStep = currentStep + 1;
+      setCurrentStep(nextStep);
+      if (nextStep > maxUnlockedStep) {
+        setMaxUnlockedStep(nextStep);
+      }
+    }
+  };
+
+  const handlePrevStep = () => {
+    setError("");
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleStepClick = (targetStep: number) => {
+    if (targetStep <= maxUnlockedStep) {
+      setError("");
+      setCurrentStep(targetStep);
+    }
+  };
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError("");
+
+    if (currentStep < 3) {
+      handleNextStep();
+      return;
+    }
+
+    if (!validateStep(1) || !validateStep(2) || !validateStep(3)) {
+      return;
+    }
 
     const qty = Number(quantity);
     const cost = Number(purchaseCost);
     const price = Number(salePrice);
 
-    if (!selectedProduct) {
-      setError("Busca y selecciona el producto que deseas ingresar.");
-      return;
-    }
-
-    if (!Number.isSafeInteger(qty) || qty <= 0) {
-      setError("La cantidad debe ser un número entero mayor que cero.");
-      return;
-    }
-
-    if (purchaseCost.trim() === "" || !Number.isFinite(cost) || cost < 0) {
-      setError("Ingresa un costo de compra válido.");
-      return;
-    }
-
-    if (salePrice.trim() === "" || !Number.isFinite(price) || price < 0) {
-      setError("Ingresa un precio de venta válido.");
-      return;
-    }
-
-    if (!showNewSupplier && !selectedSupplier) {
-      setError("Selecciona un proveedor o registra uno nuevo.");
-      return;
-    }
-
-    if (
-      showNewSupplier &&
-      (!supplier.name.trim() ||
-        !supplier.phone.trim() ||
-        !supplier.address.trim() ||
-        !supplier.email.trim())
-    ) {
-      setError("Completa todos los campos obligatorios del proveedor.");
-      return;
-    }
-
-    if (
-      showNewSupplier &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(supplier.email.trim())
-    ) {
-      setError("Ingresa un correo electrónico válido para el proveedor.");
-      return;
-    }
-
     const data: InventoryEntryData = {
-      productId: Number(selectedProduct.id),
+      productId: Number(selectedProduct!.id),
       quantity: qty,
       purchaseCost: cost,
       salePrice: price,
@@ -264,342 +311,418 @@ export default function InventoryEntryCard({
       : 0;
 
   return (
-    <section className={styles.card}>
-      <header className={styles.header}>
-        <div>
-          <span className={styles.eyebrow}>GESTIÓN DE EXISTENCIAS</span>
-          <h2>Ingreso a inventario</h2>
-          <p>
-            Registra la entrada de productos existentes y sus datos de compra.
-          </p>
-        </div>
+    <section className={styles.sectionCard}>
+      <section className={styles.card}>
+        {onClose && (
+          <button
+            type="button"
+            className={styles.closeCardButton}
+            onClick={onClose}
+          >
+            ✕ Cerrar
+          </button>
+        )}
 
-        <div className={styles.headerIcon} aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path
-              d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M12 16V9m-3 3 3-3 3 3"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-      </header>
-
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.sectionTitle}>
-          <span className={styles.step}>01</span>
+        <header className={styles.header}>
           <div>
-            <h3>Producto y cantidad</h3>
-            <p>Busca el producto por nombre o SKU.</p>
+            <span className={styles.eyebrow}>GESTIÓN DE EXISTENCIAS</span>
+            <h2>Ingreso a inventario</h2>
+            <p>
+              Registra la entrada de productos existentes y sus datos de compra.
+            </p>
           </div>
-        </div>
+        </header>
 
-        <div className={styles.grid}>
-          <div className={`${styles.field} ${styles.fullWidth}`}>
-            <SearchSelect
-              label="Producto existente *"
-              placeholder="Escribe el nombre o SKU del producto..."
-              value={selectedProduct}
-              onChange={(option: any) => {
-                setSelectedProduct(option);
-                setError("");
-              }}
-              onSearch={searchProducts}
-              minChars={2}
-              disabled={loading}
-            />
-          </div>
+        <nav className={styles.stepperNav} aria-label="Pasos del formulario">
+          <button
+            type="button"
+            onClick={() => handleStepClick(1)}
+            className={`${styles.stepTab} ${
+              currentStep === 1 ? styles.stepTabActive : ""
+            } ${maxUnlockedStep > 1 ? styles.stepTabCompleted : ""}`}
+          >
+            <span className={styles.stepTabNumber}>01</span>
+            <span className={styles.stepTabLabel}>Producto y cantidad</span>
+          </button>
 
-          {selectedProduct && (
-            <div className={`${styles.productSummary} ${styles.fullWidth}`}>
-              <div className={styles.productMark}>
-                {selectedProduct.label.charAt(0).toUpperCase()}
-              </div>
-              <div>
-                <strong>{selectedProduct.label}</strong>
-                {selectedProduct.description && (
-                  <span>{selectedProduct.description}</span>
-                )}
-              </div>
-            </div>
-          )}
+          <div className={styles.stepDivider} />
 
-          <div className={styles.field}>
-            <label htmlFor="quantity">
-              Cantidad de entrada <span>*</span>
-            </label>
-            <input
-              id="quantity"
-              type="number"
-              min="1"
-              step="1"
-              value={quantity}
-              onChange={(event) => setQuantity(event.target.value)}
-              placeholder="Ej. 50"
-              required
-              disabled={loading}
-            />
-            <small>Unidades que ingresarán al inventario.</small>
-          </div>
-        </div>
+          <button
+            type="button"
+            onClick={() => handleStepClick(2)}
+            disabled={maxUnlockedStep < 2}
+            className={`${styles.stepTab} ${
+              currentStep === 2 ? styles.stepTabActive : ""
+            } ${maxUnlockedStep > 2 ? styles.stepTabCompleted : ""} ${
+              maxUnlockedStep < 2 ? styles.stepTabDisabled : ""
+            }`}
+          >
+            <span className={styles.stepTabNumber}>02</span>
+            <span className={styles.stepTabLabel}>Información comercial</span>
+          </button>
 
-        <div className={styles.sectionTitle}>
-          <span className={styles.step}>02</span>
-          <div>
-            <h3>Información comercial</h3>
-            <p>Define el costo de adquisición y el precio de venta.</p>
-          </div>
-        </div>
+          <div className={styles.stepDivider} />
 
-        <div className={styles.grid}>
-          <div className={styles.field}>
-            <label htmlFor="purchaseCost">
-              Costo de compra por unidad <span>*</span>
-            </label>
-            <div className={styles.moneyInput}>
-              <span>$</span>
-              <input
-                id="purchaseCost"
-                type="number"
-                min="0"
-                step="0.01"
-                value={purchaseCost}
-                onChange={(event) => setPurchaseCost(event.target.value)}
-                placeholder="0.00"
-                required
-                disabled={loading}
-              />
-              <span className={styles.currency}>MXN</span>
-            </div>
-          </div>
+          <button
+            type="button"
+            onClick={() => handleStepClick(3)}
+            disabled={maxUnlockedStep < 3}
+            className={`${styles.stepTab} ${
+              currentStep === 3 ? styles.stepTabActive : ""
+            } ${maxUnlockedStep < 3 ? styles.stepTabDisabled : ""}`}
+          >
+            <span className={styles.stepTabNumber}>03</span>
+            <span className={styles.stepTabLabel}>Proveedor</span>
+          </button>
+        </nav>
 
-          <div className={styles.field}>
-            <label htmlFor="salePrice">
-              Precio de venta por unidad <span>*</span>
-            </label>
-            <div className={styles.moneyInput}>
-              <span>$</span>
-              <input
-                id="salePrice"
-                type="number"
-                min="0"
-                step="0.01"
-                value={salePrice}
-                onChange={(event) => setSalePrice(event.target.value)}
-                placeholder="0.00"
-                required
-                disabled={loading}
-              />
-              <span className={styles.currency}>MXN</span>
-            </div>
-          </div>
-
-          <div className={`${styles.costSummary} ${styles.fullWidth}`}>
-            <span>Costo total de esta entrada</span>
-            <strong>
-              {totalCost.toLocaleString("es-MX", {
-                style: "currency",
-                currency: "MXN",
-              })}
-            </strong>
-            <small>Cantidad × costo de compra por unidad.</small>
-          </div>
-        </div>
-
-        <div className={styles.sectionTitle}>
-          <span className={styles.step}>03</span>
-          <div>
-            <h3>Proveedor</h3>
-            <p>Busca un proveedor registrado o agrega uno nuevo.</p>
-          </div>
-        </div>
-
-        <div className={styles.grid}>
-          {!showNewSupplier && (
-            <div className={`${styles.field} ${styles.fullWidth}`}>
-              <SearchSelect
-                label="Proveedor *"
-                placeholder="Escribe el nombre del proveedor..."
-                value={selectedSupplier}
-                onChange={(option: any) => {
-                  setSelectedSupplier(option);
-                  setError("");
-                }}
-                onSearch={searchSuppliers}
-                minChars={2}
-                disabled={loading}
-              />
-
-              <button
-                type="button"
-                className={styles.addSupplierButton}
-                onClick={openNewSupplierForm}
-                disabled={loading}
-              >
-                + Registrar nuevo proveedor
-              </button>
-            </div>
-          )}
-        </div>
-
-        {showNewSupplier && (
-          <div className={styles.supplierPanel}>
-            <div className={styles.supplierHeader}>
-              <div>
-                <h4>Nuevo proveedor</h4>
-                <p>Registra los datos de contacto del proveedor.</p>
-              </div>
-              <span className={styles.newBadge}>NUEVO</span>
-            </div>
-
-            <div className={styles.grid}>
-              <div className={styles.field}>
-                <label htmlFor="supplierName">
-                  Nombre o razón social <span>*</span>
-                </label>
-                <input
-                  id="supplierName"
-                  value={supplier.name}
-                  onChange={(event) =>
-                    updateSupplier("name", event.target.value)
-                  }
-                  placeholder="Ej. Distribuidora Escolar"
-                  maxLength={150}
-                  required
-                  disabled={loading}
-                />
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="supplierPhone">
-                  Teléfono <span>*</span>
-                </label>
-                <input
-                  id="supplierPhone"
-                  type="tel"
-                  value={supplier.phone}
-                  onChange={(event) =>
-                    updateSupplier("phone", event.target.value)
-                  }
-                  placeholder="Ej. 5551234567"
-                  maxLength={30}
-                  required
-                  disabled={loading}
-                />
-              </div>
-
-              <div className={`${styles.field} ${styles.fullWidth}`}>
-                <label htmlFor="supplierAddress">
-                  Dirección <span>*</span>
-                </label>
-                <input
-                  id="supplierAddress"
-                  value={supplier.address}
-                  onChange={(event) =>
-                    updateSupplier("address", event.target.value)
-                  }
-                  placeholder="Calle, número, colonia, ciudad..."
-                  maxLength={250}
-                  required
-                  disabled={loading}
-                />
-              </div>
-
-              <div className={`${styles.field} ${styles.fullWidth}`}>
-                <label htmlFor="supplierEmail">
-                  Correo electrónico <span>*</span>
-                </label>
-                <input
-                  id="supplierEmail"
-                  type="email"
-                  value={supplier.email}
-                  onChange={(event) =>
-                    updateSupplier("email", event.target.value)
-                  }
-                  placeholder="proveedor@empresa.com"
-                  maxLength={254}
-                  required
-                  disabled={loading}
-                />
-              </div>
-
-              <div className={`${styles.activeRow} ${styles.fullWidth}`}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          {currentStep === 1 && (
+            <div className={styles.stepContent}>
+              <div className={styles.sectionTitle}>
+                <span className={styles.step}>01</span>
                 <div>
-                  <strong>Proveedor activo</strong>
-                  <p>Puede utilizarse en futuras entradas de inventario.</p>
+                  <h3>Producto y cantidad</h3>
+                  <p>Busca el producto por nombre o SKU.</p>
+                </div>
+              </div>
+
+              <div className={styles.grid}>
+                <div className={`${styles.field} ${styles.fullWidth}`}>
+                  <SearchSelect
+                    label="Producto existente *"
+                    placeholder="Escribe el nombre o SKU del producto..."
+                    value={selectedProduct}
+                    onChange={(option: any) => {
+                      setSelectedProduct(option);
+                      setError("");
+                    }}
+                    onSearch={searchProducts}
+                    minChars={2}
+                    disabled={loading}
+                  />
                 </div>
 
-                <button
-                  type="button"
-                  role="switch"
-                  aria-checked={supplier.active}
-                  aria-label="Proveedor activo"
-                  className={`${styles.switch} ${
-                    supplier.active ? styles.switchOn : ""
-                  }`}
-                  onClick={() => updateSupplier("active", !supplier.active)}
-                  disabled={loading}
-                >
-                  <span />
-                </button>
+                {selectedProduct && (
+                  <div
+                    className={`${styles.productSummary} ${styles.fullWidth}`}
+                  >
+                    <div className={styles.productMark}>
+                      {selectedProduct.label.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <strong>{selectedProduct.label}</strong>
+                      {selectedProduct.description && (
+                        <span>{selectedProduct.description}</span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div className={styles.field}>
+                  <label htmlFor="quantity">
+                    Cantidad de entrada <span>*</span>
+                  </label>
+                  <input
+                    id="quantity"
+                    type="number"
+                    min="1"
+                    step="1"
+                    value={quantity}
+                    onChange={(event) => {
+                      setQuantity(event.target.value);
+                      setError("");
+                    }}
+                    placeholder="Ej. 50"
+                    required
+                    disabled={loading}
+                  />
+                  <small>Unidades que ingresarán al inventario.</small>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {currentStep === 2 && (
+            <div className={styles.stepContent}>
+              <div className={styles.sectionTitle}>
+                <span className={styles.step}>02</span>
+                <div>
+                  <h3>Información comercial</h3>
+                  <p>Define el costo de adquisición y el precio de venta.</p>
+                </div>
               </div>
 
-              <div className={`${styles.fullWidth}`}>
+              <div className={styles.grid}>
+                <div className={styles.field}>
+                  <label htmlFor="purchaseCost">
+                    Costo de compra por unidad <span>*</span>
+                  </label>
+                  <div className={styles.moneyInput}>
+                    <span>$</span>
+                    <input
+                      id="purchaseCost"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={purchaseCost}
+                      onChange={(event) => {
+                        setPurchaseCost(event.target.value);
+                        setError("");
+                      }}
+                      placeholder="0.00"
+                      required
+                      disabled={loading}
+                    />
+                    <span className={styles.currency}>MXN</span>
+                  </div>
+                </div>
+
+                <div className={styles.field}>
+                  <label htmlFor="salePrice">
+                    Precio de venta por unidad <span>*</span>
+                  </label>
+                  <div className={styles.moneyInput}>
+                    <span>$</span>
+                    <input
+                      id="salePrice"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={salePrice}
+                      onChange={(event) => {
+                        setSalePrice(event.target.value);
+                        setError("");
+                      }}
+                      placeholder="0.00"
+                      required
+                      disabled={loading}
+                    />
+                    <span className={styles.currency}>MXN</span>
+                  </div>
+                </div>
+
+                <div className={`${styles.costSummary} ${styles.fullWidth}`}>
+                  <span>Costo total de esta entrada</span>
+                  <strong>
+                    {totalCost.toLocaleString("es-MX", {
+                      style: "currency",
+                      currency: "MXN",
+                    })}
+                  </strong>
+                  <small>Cantidad × costo de compra por unidad.</small>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {currentStep === 3 && (
+            <div className={styles.stepContent}>
+              <div className={styles.sectionTitle}>
+                <span className={styles.step}>03</span>
+                <div>
+                  <h3>Proveedor</h3>
+                  <p>Busca un proveedor registrado o agrega uno nuevo.</p>
+                </div>
+              </div>
+
+              <div className={styles.grid}>
+                {!showNewSupplier && (
+                  <div className={`${styles.field} ${styles.fullWidth}`}>
+                    <SearchSelect
+                      label="Proveedor *"
+                      placeholder="Escribe el nombre del proveedor..."
+                      value={selectedSupplier}
+                      onChange={(option: any) => {
+                        setSelectedSupplier(option);
+                        setError("");
+                      }}
+                      onSearch={searchSuppliers}
+                      minChars={2}
+                      disabled={loading}
+                    />
+
+                    <button
+                      type="button"
+                      className={styles.addSupplierButton}
+                      onClick={openNewSupplierForm}
+                      disabled={loading}
+                    >
+                      + Registrar nuevo proveedor
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {showNewSupplier && (
+                <div className={styles.supplierPanel}>
+                  <div className={styles.supplierHeader}>
+                    <div>
+                      <h4>Nuevo proveedor</h4>
+                      <p>Registra los datos de contacto del proveedor.</p>
+                    </div>
+                    <span className={styles.newBadge}>NUEVO</span>
+                  </div>
+
+                  <div className={styles.grid}>
+                    <div className={styles.field}>
+                      <label htmlFor="supplierName">
+                        Nombre o razón social <span>*</span>
+                      </label>
+                      <input
+                        id="supplierName"
+                        value={supplier.name}
+                        onChange={(event) =>
+                          updateSupplier("name", event.target.value)
+                        }
+                        placeholder="Ej. Distribuidora Escolar"
+                        maxLength={150}
+                        required
+                        disabled={loading}
+                      />
+                    </div>
+
+                    <div className={styles.field}>
+                      <label htmlFor="supplierPhone">
+                        Teléfono <span>*</span>
+                      </label>
+                      <input
+                        id="supplierPhone"
+                        type="tel"
+                        value={supplier.phone}
+                        onChange={(event) =>
+                          updateSupplier("phone", event.target.value)
+                        }
+                        placeholder="Ej. 5551234567"
+                        maxLength={30}
+                        required
+                        disabled={loading}
+                      />
+                    </div>
+
+                    <div className={`${styles.field} ${styles.fullWidth}`}>
+                      <label htmlFor="supplierAddress">
+                        Dirección <span>*</span>
+                      </label>
+                      <input
+                        id="supplierAddress"
+                        value={supplier.address}
+                        onChange={(event) =>
+                          updateSupplier("address", event.target.value)
+                        }
+                        placeholder="Calle, número, colonia, ciudad..."
+                        maxLength={250}
+                        required
+                        disabled={loading}
+                      />
+                    </div>
+
+                    <div className={`${styles.field} ${styles.fullWidth}`}>
+                      <label htmlFor="supplierEmail">
+                        Correo electrónico <span>*</span>
+                      </label>
+                      <input
+                        id="supplierEmail"
+                        type="email"
+                        value={supplier.email}
+                        onChange={(event) =>
+                          updateSupplier("email", event.target.value)
+                        }
+                        placeholder="proveedor@empresa.com"
+                        maxLength={254}
+                        required
+                        disabled={loading}
+                      />
+                    </div>
+
+                    <div className={`${styles.activeRow} ${styles.fullWidth}`}>
+                      <div>
+                        <strong>Proveedor activo</strong>
+                        <p>
+                          Puede utilizarse en futuras entradas de inventario.
+                        </p>
+                      </div>
+
+                      <button
+                        type="button"
+                        role="switch"
+                        aria-checked={supplier.active}
+                        aria-label="Proveedor activo"
+                        className={`${styles.switch} ${
+                          supplier.active ? styles.switchOn : ""
+                        }`}
+                        onClick={() =>
+                          updateSupplier("active", !supplier.active)
+                        }
+                        disabled={loading}
+                      >
+                        <span />
+                      </button>
+                    </div>
+
+                    <div className={`${styles.fullWidth}`}>
+                      <button
+                        type="button"
+                        className={styles.cancelButton}
+                        onClick={cancelNewSupplier}
+                        disabled={loading}
+                      >
+                        Cancelar registro de proveedor
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {error && (
+            <p className={styles.error} role="alert">
+              {error}
+            </p>
+          )}
+
+          <footer className={styles.footer}>
+            <p>
+              <span>*</span> Campos obligatorios
+            </p>
+
+            <div className={styles.actions}>
+              {currentStep > 1 && (
                 <button
                   type="button"
                   className={styles.cancelButton}
-                  onClick={cancelNewSupplier}
+                  onClick={handlePrevStep}
                   disabled={loading}
                 >
-                  Cancelar registro de proveedor
+                  ← Anterior
                 </button>
-              </div>
+              )}
+
+              {currentStep < 3 ? (
+                <button
+                  type="button"
+                  className={styles.submitButton}
+                  onClick={handleNextStep}
+                  disabled={loading}
+                >
+                  Siguiente paso
+                  <span aria-hidden="true">→</span>
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className={styles.submitButton}
+                  disabled={loading}
+                >
+                  {loading ? "Registrando..." : "Registrar entrada"}
+                  {!loading && <span aria-hidden="true">✓</span>}
+                </button>
+              )}
             </div>
-          </div>
-        )}
-
-        {error && (
-          <p className={styles.error} role="alert">
-            {error}
-          </p>
-        )}
-
-        <footer className={styles.footer}>
-          <p>
-            <span>*</span> Campos obligatorios
-          </p>
-
-          <div className={styles.actions}>
-            {onClose && (
-              <button
-                type="button"
-                className={styles.cancelButton}
-                onClick={onClose}
-                disabled={loading}
-              >
-                Cancelar
-              </button>
-            )}
-
-            <button
-              type="submit"
-              className={styles.submitButton}
-              disabled={loading}
-            >
-              {loading ? "Registrando..." : "Registrar entrada"}
-              {!loading && <span aria-hidden="true">→</span>}
-            </button>
-          </div>
-        </footer>
-      </form>
+          </footer>
+        </form>
+      </section>
     </section>
   );
 }

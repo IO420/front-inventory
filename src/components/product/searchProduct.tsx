@@ -73,7 +73,7 @@ export default function SearchProduct({
       <section className={styles.containerTable}>
         <DataGrid
           columns={tableProduct(handleTransferClick)}
-          data={initialProducts}
+          data={initialProducts ?? []}
           setActiveInput={() => {}}
           idField="partida"
           fontSize="12px"

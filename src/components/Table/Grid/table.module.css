@@ -317,13 +317,12 @@
     background: white;
     border: 1px solid #e2e8f0;
     border-radius: 16px;
-    padding: 8px;
+    padding: 8px 45px 8px 77px;
     gap: 8px;
 
     border-bottom: none;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding-left: 80px;
   }
 
   .cell {
@@ -336,7 +335,7 @@
   }
 
   .cell:first-child {
-    width: calc(100% - 35px);
+    width: 100%;
     font-size: 16px;
     font-weight: 700;
     color: #0f172a;
@@ -382,8 +381,7 @@
 
   /*Styles labels*/
   .cell[data-field="ubicacion"] {
-    background-color: #e0f2fe !important;
-    color: #0369a1 !important;
+    background-color: #e0f2fe ;
   }
 
   .cell[data-field="ubicacion"]::before {
@@ -400,8 +398,7 @@
   }
 
   .cell[data-field="cantidad"] {
-    background-color: #dcfce7 !important;
-    color: #15803d !important;
+    background-color: #dcfce7;
   }
 
   .cell[data-field="cantidad"]::before {
@@ -418,8 +415,7 @@
   }
 
   .cell[data-field="marca"] {
-    background-color: #ffedd5 !important;
-    color: #c2410c !important;
+    background-color: #ffedd5 ;
   }
 
   .cell[data-field="marca"]::before {
@@ -435,14 +431,27 @@
       no-repeat center / contain;
   }
 
+  .cell[data-field="precio"] {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  .cell[data-field="precio"]::before {
+    content: "" !important;
+    display: inline-block;
+  }
+
   .render {
     background-color: transparent;
-    border-bottom: none;
+    border: none;
   }
 
   .render[data-label="Venta"] {
     position: absolute;
-    top: 10px;
+    top: 8px;
     right: 8px;
   }
 

@@ -6,7 +6,7 @@ export interface Column<T> {
   align?: "start" | "center" | "end";
   editable: boolean;
   authorized?: boolean;
-  type?: "string" | "number" | "select" | "date"|"money";
+  type?: "string" | "number" | "select" | "date" | "money";
   options?: string[];
   rowColors?: Record<string, string>;
   cellColors?: Record<string, string>;
@@ -20,7 +20,7 @@ export interface Column<T> {
 
   render?: (value: any, row: T, rowIndex: number) => React.ReactNode;
 
-  image?:boolean;
+  image?: boolean;
 }
 
 export interface DataGridProps<T> {
@@ -51,7 +51,7 @@ export interface DataGridProps<T> {
   activeEditButton?: boolean;
   textAddButton?: string;
   onAddRow?: () => void;
-  rightEditButton?:boolean;
+  rightEditButton?: boolean;
 
   hideButton?: boolean;
   hidePredicate?: (row: T) => boolean;
