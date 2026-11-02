@@ -29,7 +29,7 @@ export default async function Header() {
           <div className={header.logoContainerUnam}>
             <Image
               className={header.logo}
-              src="/ctrlbys.svg"
+              src="/ctrlbyz.svg"
               alt="Logo FES"
               fill
               style={{ objectFit: "contain" }}

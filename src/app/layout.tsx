@@ -12,7 +12,12 @@ export const metadata: Metadata = {
   title: "Inventory",
   description: "get your products",
   icons: {
-    icon: "/ctrlbys.svg",
+    icon: [
+      { url: "/ctrlbyz.svg", type: "image/svg+xml" },
+      { url: "/ctrlbyz-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    shortcut: "/ctrlbyz-192.png",
+    apple: [{ url: "/ctrlbyz-180.png", sizes: "180x180", type: "image/png" }],
   },
 };
 
@@ -20,7 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${inter.variable}`}>
       <body>
-        <Header/>
+        <Header />
         <main>{children}</main>
       </body>
     </html>
