@@ -46,19 +46,36 @@ export default function BarNavigation() {
       <ul className={openMenu ? "active" : ""}>
         <li
           className={`subMenu
-          ${isActive(["/datos"]) ? "active" : ""}
+          ${isActive(["/panelControl"]) ? "active" : ""}
           `}
           onClick={toggleMenu}
         >
           <Link
-            href={withPeriodo("/datos")}
+            href={withPeriodo("/panelControl")}
             className="links"
             onClick={(e) => {
               e.stopPropagation();
               closeAllMenus();
             }}
           >
-            <span>Datos</span>
+            <span>Panel de Control</span>
+          </Link>
+        </li>
+        <li
+          className={`subMenu
+          ${isActive(["/inventario"]) ? "active" : ""}
+          `}
+          onClick={toggleMenu}
+        >
+          <Link
+            href={withPeriodo("/inventario")}
+            className="links"
+            onClick={(e) => {
+              e.stopPropagation();
+              closeAllMenus();
+            }}
+          >
+            <span>Inventario</span>
           </Link>
         </li>
         {/* <li className="subMenu" onClick={toggleMenu}>
