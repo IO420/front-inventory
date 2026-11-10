@@ -20,7 +20,9 @@ export default function BarNavigation() {
     periodo ? `${path}?periodo=${periodo}` : path;
 
   const isActive = (paths: string[]) => {
-    return paths.some((path) => pathname.startsWith(path));
+    return paths.some((path) =>
+      path === "/" ? pathname === "/" : pathname.startsWith(path),
+    );
   };
 
   const toggleMenu = () => setOpenMenu(!openMenu);
@@ -46,12 +48,12 @@ export default function BarNavigation() {
       <ul className={openMenu ? "active" : ""}>
         <li
           className={`subMenu
-          ${isActive(["/panelControl"]) ? "active" : ""}
+          ${isActive(["/"]) ? "active" : ""}
           `}
           onClick={toggleMenu}
         >
           <Link
-            href={withPeriodo("/panelControl")}
+            href={withPeriodo("/")}
             className="links"
             onClick={(e) => {
               e.stopPropagation();
@@ -63,12 +65,12 @@ export default function BarNavigation() {
         </li>
         <li
           className={`subMenu
-          ${isActive(["/inventario"]) ? "active" : ""}
+          ${isActive(["/inventory"]) ? "active" : ""}
           `}
           onClick={toggleMenu}
         >
           <Link
-            href={withPeriodo("/inventario")}
+            href={withPeriodo("/inventory")}
             className="links"
             onClick={(e) => {
               e.stopPropagation();
